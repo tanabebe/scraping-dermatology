@@ -24,7 +24,7 @@ func init() {
 	config, err := ini.Load("config.ini")
 
 	if err != nil {
-		log.Fatalln(err)
+		log.Fatalf("config.iniファイルの読み込みに失敗しました:%v",err)
 	}
 
 	Scraping = ScrapingList{
