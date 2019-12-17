@@ -47,7 +47,6 @@ func main() {
 		}
 	}()
 
-	// target変数は使うのでここでnil判定はしない
 	target, err := driver.NewPage()
 
 	if err != nil {
