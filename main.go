@@ -34,7 +34,7 @@ func init() {
 	}
 
 	if _, err := os.Stat("waiting"); err != nil {
-		log.Fatalf("Processing ended because the reserved file does not exist %v\n", err)
+		log.Fatalf("waitingファイルが見当たらないため、処理を終了しました:%v", err)
 	}
 
 	fileDelete("img/*.png")
@@ -45,12 +45,12 @@ func init() {
 func fileDelete(pattern string) {
 	files, err := filepath.Glob(pattern)
 	if err != nil {
-		log.Fatalln(err)
+		log.Fatalf("削除対象のファイルパスに異常があります:%v",err)
 	}
 
 	for _, file := range files {
 		if err := os.Remove(file); err != nil {
-			log.Fatalln(err)
+			log.Fatalf("ファイル削除中にエラーが発生しました:%v",err)
 		}
 	}
 }
@@ -65,61 +65,61 @@ func main() {
 	)
 
 	if err := driver.Start(); err != nil {
-		log.Fatalln(err)
+		log.Fatalf("WebDriverのstartに失敗しました:%v",err)
 	}
 
 	// close web driver
 	defer func() {
 		if err := driver.Stop(); err != nil {
-			log.Fatalln(err)
+			log.Fatalf("WebDriverのcloseに失敗しました:%v", err)
 		}
 	}()
 
 	target, err := driver.NewPage()
 
 	if err != nil {
-		log.Fatalln(err)
+		log.Fatalf("WebDriverに対応するPageを返却出来ませんでした:%v",err)
 	}
 
 	// close web browser
 	defer func() {
 		if err := target.CloseWindow(); err != nil {
-			log.Fatalln(err)
+			log.Fatalf("アクティブなブラウザを閉じる時にエラーが発生しました:%v",err)
 		}
 	}()
 
 	if err := target.Navigate(Scraping.Url); err != nil {
-		log.Fatalln(err)
+		log.Fatalf("対象のWeb URLを開く事が出来ませんでした:%v", err)
 	}
 
 	if err := target.Screenshot("img/Screen1.png"); err != nil {
-		log.Fatalln(err)
+		log.Fatalf("screen shot1の取得に失敗しました:%v",err)
 	}
 
 	time.Sleep(time.Second * 1)
 
 	if err := target.FindByLink("今すぐ受付").Click(); err != nil {
-		log.Fatalln(err)
+		log.Fatalf("対象リンクテキストのクリックが失敗しました:%v",err)
 	}
 
 	if err := target.FindByID("user_email").Fill(Scraping.Email); err != nil {
-		log.Fatalln(err)
+		log.Fatalf("ログイン時のメールアドレス入力に失敗しました:%v",err)
 	}
 
 	if err := target.FindByID("user_password").Fill(Scraping.Password); err != nil {
-		log.Fatalln(err)
+		log.Fatalf("ログイン時のパスワード入力に失敗しました:%v",err)
 	}
 
 	if err := target.Screenshot("img/Screen2.png"); err != nil {
-		log.Fatalln(err)
+		log.Fatalf("screen shot2の取得に失敗しました:%v",err)
 	}
 
 	if err := target.FindByName("commit").Submit(); err != nil {
-		log.Fatalln(err)
+		log.Fatalf("予約受付のログインに失敗しました:%v",err)
 	}
 
 	if err := target.Screenshot("img/Screen3.png"); err != nil {
-		log.Fatalln(err)
+		log.Fatalf("screen shot3の取得に失敗しました:%v",err)
 	}
 
 	time.Sleep(time.Second * 1)
