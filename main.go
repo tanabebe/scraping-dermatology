@@ -16,6 +16,7 @@ type ScrapingList struct {
 }
 
 var Scraping ScrapingList
+var target agouti.WebDriver
 
 // iniファイルの読み込み
 func init() {
@@ -32,8 +33,8 @@ func init() {
 	}
 }
 
-func main() {
 
+func main() {
 	driver := agouti.ChromeDriver()
 
 	if err := driver.Start(); err != nil {
