@@ -122,5 +122,25 @@ func main() {
 		log.Fatalf("screen shot3の取得に失敗しました:%v",err)
 	}
 
-	time.Sleep(time.Second * 1)
+	time.Sleep(1 * time.Second)
+
+	if err := target.FindByName("commit").Submit(); err != nil {
+		log.Fatalf("予約受付確認に失敗しました:%v",err)
+	}
+
+	if err := target.Screenshot("img/Screen4.png"); err != nil {
+		log.Fatalf("screen shot4の取得に失敗しました:%v",err)
+	}
+
+	time.Sleep(1 * time.Second)
+
+	if err := target.FindByName("commit").Submit(); err != nil {
+		log.Fatalf("予約受付登録に失敗しました:%v",err)
+	}
+
+	if err := target.Screenshot("img/Screen5.png"); err != nil {
+		log.Fatalf("screen shot5の取得に失敗しました:%v",err)
+	}
+
+	time.Sleep(1 * time.Second)
 }
