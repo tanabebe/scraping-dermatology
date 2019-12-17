@@ -65,6 +65,10 @@ func main() {
 		log.Fatalln(err)
 	}
 
+	if err := target.Screenshot("img/Screen1.png"); err != nil {
+		log.Fatalln(err)
+	}
+
 	time.Sleep(time.Second * 1)
 
 	if err := target.FindByLink("今すぐ受付").Click(); err != nil {
@@ -79,7 +83,15 @@ func main() {
 		log.Fatalln(err)
 	}
 
+	if err := target.Screenshot("img/Screen2.png"); err != nil {
+		log.Fatalln(err)
+	}
+
 	if err := target.FindByName("commit").Submit(); err != nil {
+		log.Fatalln(err)
+	}
+
+	if err := target.Screenshot("img/Screen3.png"); err != nil {
 		log.Fatalln(err)
 	}
 
