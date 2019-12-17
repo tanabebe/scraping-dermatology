@@ -20,7 +20,6 @@ type ScrapingList struct {
 var Scraping ScrapingList
 var target agouti.WebDriver
 
-
 func init() {
 	config, err := ini.Load("config.ini")
 
