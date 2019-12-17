@@ -17,12 +17,12 @@ type ScrapingList struct {
 
 var Scraping ScrapingList
 
-// initファイルの読み込み
+// iniファイルの読み込み
 func init() {
 	config, err := ini.Load("config.ini")
 
 	if err != nil {
-		log.Fatalf("Could not load ini file %v\n", err)
+		log.Fatalln(err)
 	}
 
 	Scraping = ScrapingList{
