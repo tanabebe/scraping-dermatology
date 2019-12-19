@@ -70,12 +70,13 @@ func main() {
 		}
 	}()
 
-	driver := agouti.ChromeDriver(
-		agouti.ChromeOptions(
-			"args", []string{
-				"--headless", // browserを非表示で実行
-			}),
-	)
+	//driver := agouti.ChromeDriver(
+	//	agouti.ChromeOptions(
+	//		"args", []string{
+	//			"--headless", // browserを非表示で実行
+	//		}),
+	//)
+	driver := agouti.ChromeDriver()
 
 	if err := driver.Start(); err != nil {
 		log.Printf("WebDriverのstartに失敗しました:%v",err)
@@ -103,6 +104,7 @@ func main() {
 		}
 	}()
 
+
 	if err := target.Navigate(Scraping.Url); err != nil {
 		log.Printf("対象のWeb URLを開く事が出来ませんでした:%v", err)
 		return
@@ -119,6 +121,7 @@ func main() {
 		log.Printf("対象リンクテキストのクリックが失敗しました:%v",err)
 		return
 	}
+
 
 	if err := target.FindByID("user_email").Fill(Scraping.Email); err != nil {
 		log.Printf("ログイン時のメールアドレス入力に失敗しました:%v",err)
@@ -145,8 +148,6 @@ func main() {
 		return
 	}
 
-	time.Sleep(1 * time.Second)
-
 	if err := target.FindByName("commit").Submit(); err != nil {
 		log.Printf("予約受付確認に失敗しました:%v",err)
 		return
@@ -156,8 +157,6 @@ func main() {
 		log.Printf("screen shot4の取得に失敗しました:%v",err)
 		return
 	}
-
-	time.Sleep(1 * time.Second)
 
 	if err := target.FindByName("commit").Submit(); err != nil {
 		log.Printf("予約受付登録に失敗しました:%v",err)
