@@ -70,13 +70,12 @@ func main() {
 		}
 	}()
 
-	//driver := agouti.ChromeDriver(
-	//	agouti.ChromeOptions(
-	//		"args", []string{
-	//			"--headless", // browserを非表示で実行
-	//		}),
-	//)
-	driver := agouti.ChromeDriver()
+	driver := agouti.ChromeDriver(
+		agouti.ChromeOptions(
+			"args", []string{
+				"--headless", // browserを非表示で実行
+			}),
+	)
 
 	if err := driver.Start(); err != nil {
 		log.Printf("WebDriverのstartに失敗しました:%v",err)
