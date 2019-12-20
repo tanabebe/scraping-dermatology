@@ -13,8 +13,9 @@
 * watingファイルを同一階層に設置
 * cronでgo run main.goを起動する
 
+## cronサンプル
 
 ```
 MAILTO = "your mail address"
-2 0 8 * * * cd /your path/scraping-dermatology; bash -l -c 'go run /{your path}/scraping-dermatology/main.go'
+0 8 * * * cd /your path/scraping-dermatology; bash -l -c 'go run /{your path}/scraping-dermatology/main.go'
 ```
