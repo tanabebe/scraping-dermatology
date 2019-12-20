@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"image"
 	"log"
 	"os"
 	"path/filepath"
@@ -35,7 +36,7 @@ func init() {
 	}
 
 	if _, err := os.Stat("waiting"); err != nil {
-		log.Fatalf("waitingファイルが見当たらないため、処理を終了しました:%v", err)
+		log.Fatalf("waitingファイルが存在しないため、本日の病院予約を終了します:%v", err)
 	}
 
 	if err := fileDelete("img/*.png"); err != nil {
@@ -49,7 +50,6 @@ func fileDelete(pattern string) error {
 	files, err := filepath.Glob(pattern)
 
 	if err != nil {
-		//log.Fatalf("削除対象のファイルパスに異常があります:%v",err)
 		return fmt.Errorf("削除対象のファイルパスに異常があります:%v",err)
 	}
 	for _, file := range files {
@@ -147,6 +147,8 @@ func main() {
 		return
 	}
 
+	time.Sleep(1 * time.Second)
+
 	if err := target.FindByName("commit").Submit(); err != nil {
 		log.Printf("予約受付確認に失敗しました:%v",err)
 		return
@@ -157,6 +159,8 @@ func main() {
 		return
 	}
 
+	time.Sleep(1 * time.Second)
+
 	if err := target.FindByName("commit").Submit(); err != nil {
 		log.Printf("予約受付登録に失敗しました:%v",err)
 		return
@@ -166,6 +170,4 @@ func main() {
 		log.Printf("screen shot5の取得に失敗しました:%v",err)
 		return
 	}
-
-	time.Sleep(1 * time.Second)
 }
