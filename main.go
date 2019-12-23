@@ -22,6 +22,11 @@ var Scraping ScrapingList
 var target agouti.WebDriver
 
 func init() {
+
+	if _, err := os.Stat("waiting"); err != nil {
+		log.Fatalf("waitingファイルが存在しないため、本日の病院予約を終了します:%v", err)
+	}
+
 	config, err := ini.Load("config.ini")
 
 	if err != nil {
@@ -32,10 +37,6 @@ func init() {
 		Url:      config.Section("web").Key("url").MustString(""),
 		Email:    config.Section("login").Key("email").MustString(""),
 		Password: config.Section("login").Key("password").MustString(""),
-	}
-
-	if _, err := os.Stat("waiting"); err != nil {
-		log.Fatalf("waitingファイルが存在しないため、本日の病院予約を終了します:%v", err)
 	}
 
 	if err := fileDelete("img/*.png"); err != nil {
@@ -94,13 +95,6 @@ func main() {
 		log.Printf("WebDriverに対応するPageを返却出来ませんでした:%v", err)
 		return
 	}
-
-	// close web browser
-	defer func() {
-		if err := target.CloseWindow(); err != nil {
-			log.Printf("アクティブなブラウザを閉じる時にエラーが発生しました:%v", err)
-		}
-	}()
 
 	if err := target.Navigate(Scraping.Url); err != nil {
 		log.Printf("対象のWeb URLを開く事が出来ませんでした:%v", err)
@@ -166,5 +160,10 @@ func main() {
 	if err := target.Screenshot("img/Screen5.png"); err != nil {
 		log.Printf("screen shot5の取得に失敗しました:%v", err)
 		return
+	}
+
+	// close web browser
+	if err := target.CloseWindow(); err != nil {
+		log.Printf("アクティブなブラウザを閉じる時にエラーが発生しました:%v", err)
 	}
 }
