@@ -17,6 +17,6 @@
 # vendor/
 
 # private
-*config.ini
+config/config.ini
 img/*
 !.gitkeep

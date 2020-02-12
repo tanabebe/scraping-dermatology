@@ -1,4 +1,4 @@
-package main
+package service
 
 import (
 	"fmt"
@@ -8,45 +8,10 @@ import (
 	"time"
 
 	"github.com/sclevine/agouti"
-	"gopkg.in/ini.v1"
+	"github.com/tanabebe/scraping-dermatology/domain"
 )
 
-// スクレイピング用のstruct
-type ScrapingList struct {
-	Url      string
-	Email    string
-	Password string
-}
-
-var Scraping ScrapingList
-var target agouti.WebDriver
-
-func init() {
-
-	if _, err := os.Stat("waiting"); err != nil {
-		log.Fatalf("waitingファイルが存在しないため、本日の病院予約を終了します:%v", err)
-	}
-
-	config, err := ini.Load("config.ini")
-
-	if err != nil {
-		log.Fatalf("config.iniファイルの読み込みに失敗しました:%v", err)
-	}
-
-	Scraping = ScrapingList{
-		Url:      config.Section("web").Key("url").MustString(""),
-		Email:    config.Section("login").Key("email").MustString(""),
-		Password: config.Section("login").Key("password").MustString(""),
-	}
-
-	if err := fileDelete("img/*.png"); err != nil {
-		log.Fatal(err)
-	}
-
-}
-
-// 削除したいパス内のファイルを削除する
-func fileDelete(pattern string) error {
+func FileDelete(pattern string) error {
 	files, err := filepath.Glob(pattern)
 
 	if err != nil {
@@ -60,21 +25,17 @@ func fileDelete(pattern string) error {
 	return nil
 }
 
-func main() {
+func RunScraping(scraping domain.ScrapingList) {
 
-	// 一度実行したらエラーが起きても必ず削除するようにする
-	defer func() {
-		if err := fileDelete("waiting"); err != nil {
-			log.Printf("waitingファイルの削除に失敗しました:%v", err)
-			return
-		}
-	}()
+	if err := FileDelete("img/*.png"); err != nil {
+		log.Fatal(err)
+	}
 
 	driver := agouti.ChromeDriver(
-		agouti.ChromeOptions(
-			"args", []string{
-				"--headless", // browserを非表示で実行
-			}),
+	//agouti.ChromeOptions(
+	//"args", []string{
+	//	"--headless", // browserを非表示で実行
+	//}),
 	)
 
 	if err := driver.Start(); err != nil {
@@ -96,7 +57,7 @@ func main() {
 		return
 	}
 
-	if err := target.Navigate(Scraping.Url); err != nil {
+	if err := target.Navigate(scraping.Url); err != nil {
 		log.Printf("対象のWeb URLを開く事が出来ませんでした:%v", err)
 		return
 	}
@@ -113,12 +74,12 @@ func main() {
 		return
 	}
 
-	if err := target.FindByID("user_email").Fill(Scraping.Email); err != nil {
+	if err := target.FindByID("user_email").Fill(scraping.Email); err != nil {
 		log.Printf("ログイン時のメールアドレス入力に失敗しました:%v", err)
 		return
 	}
 
-	if err := target.FindByID("user_password").Fill(Scraping.Password); err != nil {
+	if err := target.FindByID("user_password").Fill(scraping.Password); err != nil {
 		log.Printf("ログイン時のパスワード入力に失敗しました:%v", err)
 		return
 	}
