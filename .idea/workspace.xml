@@ -2,13 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="3e1b9eda-1c9e-4dd3-a765-e283a44e4a10" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/watcherTasks.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/domain/config.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/domain/wait_reservation.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config.sample.ini" beforeDir="false" afterPath="$PROJECT_DIR$/config/config.sample.ini" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/cmd/main.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/waiting" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmd/scraping-dermatology/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/scraping-dermatology/main.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/domain/repository/wait_reservation.go" beforeDir="false" afterPath="$PROJECT_DIR$/domain/repository/wait_reservation_repository.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -73,7 +71,33 @@
       <recent name="$PROJECT_DIR$/ss" />
     </key>
   </component>
-  <component name="RunManager" selected="Go Build.go build main.go (1)">
+  <component name="RestClientSettings">
+    <option name="REQUEST_HISTORY">
+      <list>
+        <RestClientRequest>
+          <option name="httpMethod" value="POST" />
+          <option name="urlBase" value="http://127.0.0.1:8080" />
+          <option name="urlPath" value="/reservation" />
+          <option name="headers">
+            <list>
+              <KeyValuePair>
+                <option name="key" value="Accept" />
+                <option name="value" value="*/*" />
+              </KeyValuePair>
+              <KeyValuePair>
+                <option name="key" value="Cache-Control" />
+                <option name="value" value="no-cache" />
+              </KeyValuePair>
+            </list>
+          </option>
+          <option name="parametersEnabled" value="true" />
+          <option name="textToSend" value="" />
+          <option name="filesToSend" value="" />
+        </RestClientRequest>
+      </list>
+    </option>
+  </component>
+  <component name="RunManager" selected="Go Build.go build main.go (2)">
     <configuration default="true" type="GoApplicationRunConfiguration" factoryName="Go Application">
       <module name="scraping-dermatology" />
       <working_directory value="$PROJECT_DIR$" />
@@ -86,6 +110,13 @@
       <working_directory value="$PROJECT_DIR$" />
       <kind value="FILE" />
       <filePath value="$PROJECT_DIR$/cmd/cmd/main.go" />
+      <method v="2" />
+    </configuration>
+    <configuration name="go build main.go (2)" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true" nameIsGenerated="true">
+      <module name="scraping-dermatology" />
+      <working_directory value="$PROJECT_DIR$" />
+      <kind value="FILE" />
+      <filePath value="$PROJECT_DIR$/cmd/scraping-dermatology/main.go" />
       <method v="2" />
     </configuration>
     <configuration name="go build main.go" type="GoApplicationRunConfiguration" factoryName="Go Application" temporary="true">
@@ -107,6 +138,7 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Go Build.go build main.go (2)" />
         <item itemvalue="Go Build.go build main.go (1)" />
         <item itemvalue="Go Build.go build main.go" />
       </list>
@@ -128,71 +160,66 @@
     <option name="version" value="1" />
   </component>
   <component name="WindowStateProjectService">
-    <state width="800" height="466" key="DebuggerActiveHint" timestamp="1581520601944">
+    <state width="977" height="466" key="DebuggerActiveHint" timestamp="1581569710728">
       <screen x="0" y="23" width="1440" height="822" />
     </state>
-    <state width="800" height="466" key="DebuggerActiveHint/0.23.1440.822@0.23.1440.822" timestamp="1581520601944" />
+    <state width="977" height="466" key="DebuggerActiveHint/0.23.1440.822@0.23.1440.822" timestamp="1581569710728" />
     <state x="374" y="219" key="EditFileWatcherDialog" timestamp="1581512495257">
       <screen x="0" y="23" width="1440" height="822" />
     </state>
     <state x="374" y="219" key="EditFileWatcherDialog/0.23.1440.822@0.23.1440.822" timestamp="1581512495257" />
-    <state width="699" height="262" key="GridCell.Tab.0.bottom" timestamp="1581522421448">
+    <state width="1159" height="140" key="GridCell.Tab.0.bottom" timestamp="1581875768508">
       <screen x="0" y="23" width="1440" height="822" />
     </state>
-    <state width="699" height="262" key="GridCell.Tab.0.bottom/0.23.1440.822@0.23.1440.822" timestamp="1581522421448" />
-    <state width="699" height="262" key="GridCell.Tab.0.center" timestamp="1581522421447">
+    <state width="1159" height="140" key="GridCell.Tab.0.bottom/0.23.1440.822@0.23.1440.822" timestamp="1581875768508" />
+    <state width="1159" height="140" key="GridCell.Tab.0.center" timestamp="1581875768504">
       <screen x="0" y="23" width="1440" height="822" />
     </state>
-    <state width="699" height="262" key="GridCell.Tab.0.center/0.23.1440.822@0.23.1440.822" timestamp="1581522421447" />
-    <state width="699" height="262" key="GridCell.Tab.0.left" timestamp="1581522421447">
+    <state width="1159" height="140" key="GridCell.Tab.0.center/0.23.1440.822@0.23.1440.822" timestamp="1581875768504" />
+    <state width="1159" height="140" key="GridCell.Tab.0.left" timestamp="1581875768503">
       <screen x="0" y="23" width="1440" height="822" />
     </state>
-    <state width="699" height="262" key="GridCell.Tab.0.left/0.23.1440.822@0.23.1440.822" timestamp="1581522421447" />
-    <state width="699" height="262" key="GridCell.Tab.0.right" timestamp="1581522421447">
+    <state width="1159" height="140" key="GridCell.Tab.0.left/0.23.1440.822@0.23.1440.822" timestamp="1581875768503" />
+    <state width="1159" height="140" key="GridCell.Tab.0.right" timestamp="1581875768508">
       <screen x="0" y="23" width="1440" height="822" />
     </state>
-    <state width="699" height="262" key="GridCell.Tab.0.right/0.23.1440.822@0.23.1440.822" timestamp="1581522421447" />
+    <state width="1159" height="140" key="GridCell.Tab.0.right/0.23.1440.822@0.23.1440.822" timestamp="1581875768508" />
     <state x="229" y="73" key="SettingsEditor" timestamp="1581513953547">
       <screen x="0" y="23" width="1440" height="822" />
     </state>
     <state x="229" y="73" key="SettingsEditor/0.23.1440.822@0.23.1440.822" timestamp="1581513953547" />
-    <state x="385" y="169" width="670" height="676" key="search.everywhere.popup" timestamp="1581521053769">
+    <state x="385" y="169" width="670" height="676" key="search.everywhere.popup" timestamp="1581562512762">
       <screen x="0" y="23" width="1440" height="822" />
     </state>
-    <state x="385" y="169" width="670" height="676" key="search.everywhere.popup/0.23.1440.822@0.23.1440.822" timestamp="1581521053769" />
+    <state x="385" y="169" width="670" height="676" key="search.everywhere.popup/0.23.1440.822@0.23.1440.822" timestamp="1581562512762" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="DlvLineBreakpoint">
-          <url>file://$PROJECT_DIR$/cmd/cmd/main.go</url>
-          <line>66</line>
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DlvLineBreakpoint">
-          <url>file://$PROJECT_DIR$/cmd/cmd/main.go</url>
-          <line>59</line>
-          <option name="timeStamp" value="12" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DlvLineBreakpoint">
-          <url>file://$PROJECT_DIR$/cmd/cmd/main.go</url>
-          <line>69</line>
-          <option name="timeStamp" value="18" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DlvLineBreakpoint">
-          <url>file://$PROJECT_DIR$/cmd/cmd/main.go</url>
-          <line>57</line>
-          <option name="timeStamp" value="19" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DlvLineBreakpoint">
-          <url>file://$PROJECT_DIR$/cmd/cmd/main.go</url>
-          <line>63</line>
-          <option name="timeStamp" value="20" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="DlvLineBreakpoint">
           <url>file://$PROJECT_DIR$/internal/service/scraping.go</url>
           <line>33</line>
           <option name="timeStamp" value="21" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DlvLineBreakpoint">
+          <url>file://$PROJECT_DIR$/cmd/scraping-dermatology/main.go</url>
+          <line>111</line>
+          <option name="timeStamp" value="37" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DlvLineBreakpoint">
+          <url>file://$PROJECT_DIR$/cmd/scraping-dermatology/main.go</url>
+          <line>109</line>
+          <option name="timeStamp" value="38" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DlvLineBreakpoint">
+          <url>file://$PROJECT_DIR$/cmd/scraping-dermatology/main.go</url>
+          <line>61</line>
+          <option name="timeStamp" value="46" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="DlvLineBreakpoint">
+          <url>file://$PROJECT_DIR$/cmd/scraping-dermatology/main.go</url>
+          <line>73</line>
+          <option name="timeStamp" value="49" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

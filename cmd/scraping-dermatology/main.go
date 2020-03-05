@@ -2,7 +2,10 @@ package main
 
 import (
 	"database/sql"
+	"encoding/json"
 	"log"
+	"net/http"
+	"time"
 
 	"github.com/tanabebe/scraping-dermatology/config"
 	"github.com/tanabebe/scraping-dermatology/domain"
@@ -21,6 +24,7 @@ type ScrapingList struct {
 var Scraping domain.ScrapingList
 var ConfigDatabase domain.DbConfig
 var Db *sql.DB
+var isReserve bool
 
 func init() {
 
@@ -48,7 +52,7 @@ func init() {
 	}
 
 	// DBとの接続開始
-	Db, err := config.ConnectDb(ConfigDatabase)
+	Db, err = config.ConnectDb(ConfigDatabase)
 
 	if err != nil {
 		log.Fatalf("データベース接続に失敗しました:%v", err)
@@ -61,11 +65,49 @@ func init() {
 		log.Fatal(err)
 	}
 
-	if count == 0 {
-		log.Fatalf("予約待機データが存在しないため、処理を終了します:%v", err)
+	if count != 0 {
+		isReserve = true
 	}
 }
 
 func main() {
-	service.RunScraping(Scraping)
+	if isReserve {
+		service.RunScraping(Scraping)
+	}
+	server := http.Server{
+		Addr: "127.0.0.1:8080",
+	}
+	http.HandleFunc("/reservation", reservationHandler)
+	server.ListenAndServe()
+}
+
+func reservationHandler(w http.ResponseWriter, r *http.Request) {
+	var err error
+	switch r.Method {
+	case http.MethodPost:
+		err = reservationResult(w, r)
+	case http.MethodGet:
+	case http.MethodDelete:
+	}
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+}
+
+func reservationResult(w http.ResponseWriter, r *http.Request) (err error) {
+	len := r.ContentLength
+	body := make([]byte, len)
+	r.Body.Read(body)
+	reservation := domain.WaitReservation{IsReservation: true, ReservationDate: time.Now()}
+
+	err = repository.CreateReservation(Db, &reservation)
+	var resp []byte
+	resp, err = json.Marshal(reservation)
+	if err != nil {
+		return err
+	}
+	w.WriteHeader(http.StatusCreated)
+	w.Write([]byte(string(resp)))
+	return
 }
